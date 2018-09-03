@@ -1,0 +1,35 @@
+version: '2'
+services:
+ nginx:
+  container_name: nginx
+  image: nginx
+  ports:
+  - "80:80"
+  volumes:
+  - ./nginx-data/sites-available:/etc/nginx/sites-available
+  - ./nginx-data/conf/nginx.conf:/etc/nginx/nginx.conf
+  links:
+    - node:node
+ web:
+   build: ./web
+#   ports:
+#    - "5000:5000"
+ node:
+   build:
+     context: ./node
+     args:
+       - NODE_ENV=production
+  # ports:
+  #   - "5858:5000"
+   volumes:
+     - ./node/db.development.sqlite:/usr/src/app/db.development.sqlite
+   environment:
+     - NODE_ENV=production
+     - DB_USERNAME=
+     - DB_PASSWORD=
+     - DB_NAME=
+     - DB_HOSTNAME=
+     - NODEMAILER_EMAIL=
+     - NODEMAILER_PASSWORD=
+     - NODEMAILER_SERVICE=
+     - NODEMAILER_SENDER_EMAIL=

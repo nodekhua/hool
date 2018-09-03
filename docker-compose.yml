@@ -1,0 +1,31 @@
+version: '2'
+services:
+ nginx:
+  container_name: nginx
+  image: nginx
+  ports:
+  - "3000:80"
+  volumes:
+  - ./nginx-data/sites-available:/etc/nginx/sites-available
+  - ./nginx-data/conf/nginx.conf:/etc/nginx/nginx.conf
+  links:
+    - node:node
+ web:
+   build: ./web
+   ports:
+    - "3000:3000"
+ node:
+   build:
+     context: ./node
+     args:
+       - NODE_ENV=development
+   # you can use legacy debug config or new inspect
+   # NOTE: if nodemon isn't restarting on changes, you might be on Windows
+   # which has trouble seeing file changes, so add -L to use legacy polling
+   # https://github.com/remy/nodemon#application-isnt-restarting
+   command: ./node/node_modules/.bin/nodemon --inspect=0.0.0.0:9229
+   ports:
+     - "5858:5858"
+     - "9229:9229"
+   environment:
+     - NODE_ENV=development

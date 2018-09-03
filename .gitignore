@@ -1,0 +1,5 @@
+docker-compose.prod.yml
+/node/downloads/invoices/pdf/
+/web/static/downloads/invoices/pdf/
+
+node_modules/

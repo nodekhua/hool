@@ -1,0 +1,13 @@
+ 						v<----- (parent_category_id :INTEGER)	
+user						category -^
+^								
+| (user_id :INTEGER)		^
+							| (subcategory_id :INTEGER)
+order
+						main_product
+^							^	
+| (order_id :INTEGER)		|(main_product_name :STRING)
+						
+cart		------->	product
+	(product_number :STRING)
+
